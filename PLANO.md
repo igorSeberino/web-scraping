@@ -39,6 +39,15 @@ Os "Exercícios" do notebook (célula 37) são da aula sobre preços de iPhone n
 | D8 | Primeiro envio no Teams assim que T4 passar; reenviar depois de T5 | agente | R4 permite vários envios; protege contra perder o prazo | enviar só no fim |
 | D9 | Treino/teste 80/20 estratificado pelo rótulo, semente 42 | agente | resultado reproduzível ao rodar de novo | sem semente |
 
+### Resultado do D2 (04/11/2026)
+
+- Buscapé e Mercado Livre: `robots.txt` bloqueia agentes de IA → descartados. Magazine Luiza: 403.
+- **KaBuM** escolhida (`/produto/` liberado para `*`), mas o HTML não traz o texto dos comentários (carregado por
+  JavaScript) e `requests` recebe 403 → **plano B**: páginas de avaliações abertas num navegador, percorridas com pausa
+  de ~1 s, e o HTML de cada `<article>` salvo em `dados/paginas/kabum_<id>.html`. O notebook raspa esses arquivos com
+  BeautifulSoup (D6 mantido). Para cumprir o D7, além de "Todas as notas" foram usados os filtros de 1 e 2 estrelas.
+- Base final: 327 comentários de 8 headsets (137 Negativo, 184 Positivo, 6 de nota 3).
+
 ## 4. Fora do escopo
 
 - Classe Neutro — o enunciado pede só Positivo / Negativo (R2).
@@ -67,34 +76,34 @@ Grafo: `T1 → T2 → T3 → T4 → {T5, T6}`; T6 é reenviada depois de T5 (D8)
 Testar 2–3 lojas candidatas na ordem que preferir. Para cada uma: abrir `/robots.txt` (o notebook
 deixa de coletar um caminho que o `robots.txt` proíbe, célula 27), baixar uma página de produto com `requests` e procurar no HTML um trecho de comentário que você vê na tela.
 Nenhuma passou → plano B do D2.
-- [ ] Célula imprime ≥ 1 comentário com texto e nota extraídos por BeautifulSoup da página do site escolhido.
-- [ ] O caminho usado não aparece em `Disallow` do `robots.txt` do site.
+- [x] Célula imprime ≥ 1 comentário com texto e nota extraídos por BeautifulSoup da página do site escolhido.
+- [x] O caminho usado não aparece em `Disallow` do `robots.txt` do site.
 
 ### T2 · Raspar os comentários
 Percorrer produtos (e páginas de comentários, se houver) com pausa ≥ 1 s entre requisições. Para testar o
 parser sem acessar o site de novo a cada vez, salvar as páginas uma vez e parsear os arquivos locais (notebook, células 2 e 23).
 Se os acentos saírem quebrados, ajustar a codificação (notebook, células 2–5: `latin1` × UTF-8).
-- [ ] `len(df) >= 200` (D7) e `df.comentario.str.strip().eq('').sum() == 0`.
-- [ ] `df.duplicated().sum() == 0` depois da limpeza.
-- [ ] `df.comentario.str.contains('Ã').sum() == 0` (não há acento quebrado, como "Ã§" no lugar de "ç").
-- [ ] `df.to_csv('comentarios.csv')` roda e o arquivo é lido de volta com o mesmo número de linhas.
+- [x] `len(df) >= 200` (D7) e `df.comentario.str.strip().eq('').sum() == 0`.
+- [x] `df.duplicated().sum() == 0` depois da limpeza.
+- [x] `df.comentario.str.contains('Ã').sum() == 0` (não há acento quebrado, como "Ã§" no lugar de "ç").
+- [x] `df.to_csv('comentarios.csv')` roda e o arquivo é lido de volta com o mesmo número de linhas.
 
 ### T3 · Rotular e pré-processar
-- [ ] Coluna `sentimento` só com `Positivo`/`Negativo`; nenhuma linha de treino com nota 3 (D3).
-- [ ] `value_counts()` de `sentimento` mostra ≥ 30 em cada classe (D7).
-- [ ] Célula mostra 3 comentários antes e depois de stopwords + stemização.
+- [x] Coluna `sentimento` só com `Positivo`/`Negativo`; nenhuma linha de treino com nota 3 (D3).
+- [x] `value_counts()` de `sentimento` mostra ≥ 30 em cada classe (D7).
+- [x] Célula mostra 3 comentários antes e depois de stopwords + stemização.
 
 ### T4 · Treinar e avaliar
-- [ ] Acurácia no conjunto de teste impressa (D9).
-- [ ] Matriz de confusão 2×2 Positivo/Negativo impressa (R5).
-- [ ] Lista das 10 palavras mais informativas do classificador impressa.
-- [ ] Coluna `sentimento_previsto` preenchida para todos os comentários, inclusive os de nota 3.
+- [x] Acurácia no conjunto de teste impressa (D9).
+- [x] Matriz de confusão 2×2 Positivo/Negativo impressa (R5).
+- [x] Lista das 10 palavras mais informativas do classificador impressa.
+- [x] Coluna `sentimento_previsto` preenchida para todos os comentários, inclusive os de nota 3.
 
 ### T5 · Resultados e insights
-- [ ] Gráfico da proporção Positivo/Negativo por produto.
-- [ ] 15 palavras mais frequentes de cada classe (`FreqDist`, PDF p.8).
-- [ ] Seção Markdown "Insights" com ≥ 3 conclusões, cada uma citando um número de célula acima.
-- [ ] Seção "Limitações": desbalanceamento das classes e "estrela ≠ texto" (D3).
+- [x] Gráfico da proporção Positivo/Negativo por produto.
+- [x] 15 palavras mais frequentes de cada classe (`FreqDist`, PDF p.8).
+- [x] Seção Markdown "Insights" com ≥ 3 conclusões, cada uma citando um número de célula acima.
+- [x] Seção "Limitações": desbalanceamento das classes e "estrela ≠ texto" (D3).
 
 ### T6 · Entregar
 - [ ] Colab: "Ambiente de execução → Reiniciar e executar tudo" termina sem erro.
